@@ -1,0 +1,10 @@
+query MenuList {
+    menu {
+        id
+        description
+        price
+        type
+        discountable
+        taxable
+    }
+}
