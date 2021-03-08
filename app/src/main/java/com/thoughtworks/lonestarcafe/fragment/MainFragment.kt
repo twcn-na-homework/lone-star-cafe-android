@@ -4,12 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.thoughtworks.lonestarcafe.R
+import com.thoughtworks.lonestarcafe.adapter.MenuAdapter
+import com.thoughtworks.lonestarcafe.databinding.MainFragmentBinding
 import com.thoughtworks.lonestarcafe.network.apollo.CustomizedApolloClient
-import com.thoughtworks.lonestarcafe.ui.main.MainViewModel
-import com.thoughtworks.lonestarcafe.ui.main.MainViewModelFactory
+import com.thoughtworks.lonestarcafe.viewmodel.MainViewModel
+import com.thoughtworks.lonestarcafe.viewmodel.MainViewModelFactory
 
 class MainFragment : Fragment() {
 
@@ -25,12 +28,17 @@ class MainFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.main_fragment, container, false)
+        val binding = DataBindingUtil.inflate<MainFragmentBinding>(inflater, R.layout.main_fragment, container, false)
+
+        val adapter = MenuAdapter()
+        binding.adapter = adapter
+        subscribeUi(adapter)
+
+        binding.viewModel = viewModel
+        return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        // TODO: Use the ViewModel
+    private fun subscribeUi(adapter: MenuAdapter) {
+        viewModel.menuList.observe(viewLifecycleOwner) { adapter.submitList(it) }
     }
-
 }
