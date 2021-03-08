@@ -24,6 +24,8 @@
             android:id="@+id/menu_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:paddingTop="@dimen/list_item_margin"
+            android:clipToPadding="false"
             app:setAdapter="@{adapter}"
             app:layout_constraintBottom_toTopOf="@id/message"
             app:layout_constraintEnd_toEndOf="parent"

@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Lone Star Cafe</string>
+    <string name="price_format">$ %.2f</string>
 </resources>
