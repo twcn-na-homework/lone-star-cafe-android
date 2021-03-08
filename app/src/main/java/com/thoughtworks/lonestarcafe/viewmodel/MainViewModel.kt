@@ -1,4 +1,4 @@
-package com.thoughtworks.lonestarcafe.ui.main
+package com.thoughtworks.lonestarcafe.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData

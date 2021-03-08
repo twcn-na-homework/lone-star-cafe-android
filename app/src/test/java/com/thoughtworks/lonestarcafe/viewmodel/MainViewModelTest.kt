@@ -1,4 +1,4 @@
-package com.thoughtworks.lonestarcafe.ui.main
+package com.thoughtworks.lonestarcafe.viewmodel
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import assertk.assertThat
@@ -9,6 +9,7 @@ import com.apollographql.apollo.ApolloQueryCall
 import com.apollographql.apollo.api.Response
 import com.thoughtworks.lonestarcafe.MenuListQuery
 import com.thoughtworks.lonestarcafe.type.ItemType
+import com.thoughtworks.lonestarcafe.viewmodel.MainViewModel
 import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.impl.annotations.MockK

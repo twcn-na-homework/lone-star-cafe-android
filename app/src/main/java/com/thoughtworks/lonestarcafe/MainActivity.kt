@@ -2,7 +2,7 @@ package com.thoughtworks.lonestarcafe
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.thoughtworks.lonestarcafe.ui.main.MainFragment
+import com.thoughtworks.lonestarcafe.fragment.MainFragment
 
 class MainActivity : AppCompatActivity() {
 

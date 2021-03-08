@@ -1,4 +1,4 @@
-package com.thoughtworks.lonestarcafe.apollo
+package com.thoughtworks.lonestarcafe.network.apollo
 
 import com.apollographql.apollo.ApolloClient
 
