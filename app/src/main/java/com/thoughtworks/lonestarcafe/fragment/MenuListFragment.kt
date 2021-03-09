@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.findNavController
 import com.thoughtworks.lonestarcafe.R
 import com.thoughtworks.lonestarcafe.adapter.MenuAdapter
 import com.thoughtworks.lonestarcafe.databinding.FragmentMenuListBinding
@@ -20,7 +21,7 @@ class MenuListFragment : Fragment() {
         fun newInstance() = MenuListFragment()
     }
 
-    private val viewModel: MainViewModel by activityViewModels {
+    private val mainViewModel: MainViewModel by activityViewModels {
         MainViewModelFactory(CustomizedApolloClient.client)
     }
 
@@ -28,18 +29,24 @@ class MenuListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        val menuAdapter = MenuAdapter(mainViewModel)
         val binding = DataBindingUtil.inflate<FragmentMenuListBinding>(inflater, R.layout.fragment_menu_list, container, false)
 
-        val adapter = MenuAdapter(viewModel)
-        binding.adapter = adapter
-        subscribeUi(adapter)
+        return binding.apply {
+            adapter = menuAdapter
+            subscribeUi(menuAdapter)
 
-        binding.viewModel = viewModel
-        binding.lifecycleOwner = viewLifecycleOwner
-        return binding.root
+            viewModel = mainViewModel
+            lifecycleOwner = viewLifecycleOwner
+            submitButton.setOnClickListener {
+                val action =
+                    MenuListFragmentDirections.actionMenuListFragmentToReceiptFragment()
+                view?.findNavController()?.navigate(action)
+            }
+        }.root
     }
 
     private fun subscribeUi(adapter: MenuAdapter) {
-        viewModel.menuList.observe(viewLifecycleOwner) { adapter.submitList(it) }
+        mainViewModel.menuList.observe(viewLifecycleOwner) { adapter.submitList(it) }
     }
 }
