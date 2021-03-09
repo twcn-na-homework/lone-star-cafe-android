@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">Lone Star Cafe</string>
     <string name="price_format">$ %.2f</string>
+    <string name="submit_order">submit</string>
+
+    <plurals name="number_selected_items">
+        <item quantity="one">%d item</item>
+        <item quantity="other">%d items</item>
+    </plurals>
 </resources>

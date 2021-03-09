@@ -49,17 +49,18 @@
                 android:id="@+id/select_item_count"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="0 items"
+                android:text="@{@plurals/number_selected_items(viewModel.selectItems.size, viewModel.selectItems.size)}"
                 android:textColor="@color/white"
                 android:textSize="@dimen/size_header6"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="0 items"/>
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="check"
+                android:text="@string/submit_order"
                 android:textAllCaps="true"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

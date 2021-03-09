@@ -8,6 +8,10 @@
         <variable
             name="menuItem"
             type="com.thoughtworks.lonestarcafe.MenuListQuery.Menu" />
+
+        <variable
+            name="onCheckedChangeListener"
+            type="android.widget.CompoundButton.OnCheckedChangeListener" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -28,10 +32,12 @@
                 android:id="@+id/checkbox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:tag="@{menuItem}"
+                android:onCheckedChanged="@{onCheckedChangeListener}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/description"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"/>
 
             <TextView
                 android:id="@+id/description"

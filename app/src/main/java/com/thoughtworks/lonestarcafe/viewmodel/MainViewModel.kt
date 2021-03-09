@@ -1,6 +1,7 @@
 package com.thoughtworks.lonestarcafe.viewmodel
 
 import android.util.Log
+import android.widget.CompoundButton
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -9,10 +10,28 @@ import com.apollographql.apollo.ApolloClient
 import com.apollographql.apollo.api.Response
 import com.apollographql.apollo.exception.ApolloException
 import com.thoughtworks.lonestarcafe.MenuListQuery
+import com.thoughtworks.lonestarcafe.extension.notifyObservers
 
 class MainViewModel(private val apolloClient: ApolloClient) : ViewModel() {
     val menuList: MutableLiveData<List<MenuListQuery.Menu>> by lazy {
         MutableLiveData()
+    }
+    val selectItems: MutableLiveData<MutableMap<String, MenuListQuery.Menu>> by lazy {
+        MutableLiveData<MutableMap<String, MenuListQuery.Menu>>(HashMap())
+    }
+
+    val onCheckedChangeListener = CompoundButton.OnCheckedChangeListener { view: CompoundButton, isChecked: Boolean ->
+        val menuItem = view.tag as MenuListQuery.Menu
+        selectItems.value?.size
+
+        selectItems.value?.apply {
+            if (isChecked) {
+                put(menuItem.id, menuItem)
+            } else {
+                remove(menuItem.id)
+            }
+        }
+        selectItems.notifyObservers()
     }
 
     init {

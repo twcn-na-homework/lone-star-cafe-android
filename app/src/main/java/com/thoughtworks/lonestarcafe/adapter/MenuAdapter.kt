@@ -2,13 +2,15 @@ package com.thoughtworks.lonestarcafe.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.CompoundButton
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.thoughtworks.lonestarcafe.MenuListQuery
 import com.thoughtworks.lonestarcafe.databinding.ListItemMenuBinding
 
-class MenuAdapter: ListAdapter<MenuListQuery.Menu, MenuAdapter.MenuViewHolder>(MenuDiffCallback()) {
+class MenuAdapter(private val onCheckedChangeListener: CompoundButton.OnCheckedChangeListener) :
+    ListAdapter<MenuListQuery.Menu, MenuAdapter.MenuViewHolder>(MenuDiffCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MenuViewHolder {
         return MenuViewHolder(
             ListItemMenuBinding.inflate(
@@ -21,13 +23,15 @@ class MenuAdapter: ListAdapter<MenuListQuery.Menu, MenuAdapter.MenuViewHolder>(M
 
     override fun onBindViewHolder(holder: MenuViewHolder, position: Int) {
         val menuItem = getItem(position)
-        holder.bind(menuItem)
+        holder.bind(menuItem, onCheckedChangeListener)
     }
 
-    class MenuViewHolder(private val binding: ListItemMenuBinding): RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: MenuListQuery.Menu) {
+    class MenuViewHolder(private val binding: ListItemMenuBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(item: MenuListQuery.Menu, listener: CompoundButton.OnCheckedChangeListener) {
             binding.apply {
                 menuItem = item
+                onCheckedChangeListener = listener
                 executePendingBindings()
             }
         }

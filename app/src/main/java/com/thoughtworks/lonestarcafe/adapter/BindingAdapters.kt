@@ -1,5 +1,7 @@
 package com.thoughtworks.lonestarcafe.adapter
 
+import android.util.Log
+import android.widget.CompoundButton
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Adapter
