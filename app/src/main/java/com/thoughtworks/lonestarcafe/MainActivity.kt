@@ -2,7 +2,7 @@ package com.thoughtworks.lonestarcafe
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.thoughtworks.lonestarcafe.fragment.MainFragment
+import com.thoughtworks.lonestarcafe.fragment.MenuListFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -11,7 +11,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.main_activity)
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                    .replace(R.id.container, MainFragment.newInstance())
+                    .replace(R.id.container, MenuListFragment.newInstance())
                     .commitNow()
         }
     }
