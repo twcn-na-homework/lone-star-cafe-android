@@ -23,25 +23,48 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/menu_list"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingTop="@dimen/list_item_margin"
+            android:layout_height="0dp"
             android:clipToPadding="false"
-            app:setAdapter="@{adapter}"
-            app:layout_constraintBottom_toTopOf="@id/message"
+            android:paddingTop="@dimen/list_item_margin"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toTopOf="@id/item_summary_bar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/list_item_menu"
-            tools:context="com.thoughtworks.lonestarcafe.MainActivity"/>
-        <TextView
-            android:id="@+id/message"
+            app:setAdapter="@{adapter}"
+            tools:context="com.thoughtworks.lonestarcafe.MainActivity"
+            tools:listitem="@layout/list_item_menu" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/item_summary_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="MainFragment"
+            android:background="@color/primary"
+            android:padding="@dimen/list_item_padding"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent">
+
+            <TextView
+                android:id="@+id/select_item_count"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="0 items"
+                android:textColor="@color/white"
+                android:textSize="@dimen/size_header6"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="check"
+                android:textAllCaps="true"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

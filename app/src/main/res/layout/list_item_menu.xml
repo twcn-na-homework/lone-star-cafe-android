@@ -4,7 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <variable name="menuItem" type="com.thoughtworks.lonestarcafe.MenuListQuery.Menu"/>
+
+        <variable
+            name="menuItem"
+            type="com.thoughtworks.lonestarcafe.MenuListQuery.Menu" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -22,30 +25,37 @@
             android:padding="@dimen/list_item_padding">
 
             <CheckBox
+                android:id="@+id/checkbox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/checkbox"
-                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/description"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/description" />
+                app:layout_constraintTop_toTopOf="parent" />
+
             <TextView
                 android:id="@+id/description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{menuItem.description}"
-                app:layout_constraintTop_toTopOf="parent"
+                android:textColor="@color/primary_text"
+                android:textSize="@dimen/size_subtitle1"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@id/checkbox"
-                tools:text="Menu Item Name"/>
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Menu Item Name" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text='@{@string/price_format((float)menuItem.price / 100)}'
-                app:layout_constraintTop_toTopOf="parent"
+                android:textColor="@color/dark_primary"
+                android:textSize="@dimen/size_subtitle2"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                tools:text="$4.99"/>
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="$4.99" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

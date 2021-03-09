@@ -3,4 +3,8 @@
     <dimen name="list_item_padding">16dp</dimen>
     <dimen name="list_item_margin">12dp</dimen>
     <dimen name="card_corner_radius">12dp</dimen>
+
+    <dimen name="size_header6">20sp</dimen>
+    <dimen name="size_subtitle1">16sp</dimen>
+    <dimen name="size_subtitle2">14sp</dimen>
 </resources>
