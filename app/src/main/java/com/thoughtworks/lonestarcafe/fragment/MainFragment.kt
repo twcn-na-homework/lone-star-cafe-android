@@ -30,7 +30,7 @@ class MainFragment : Fragment() {
     ): View {
         val binding = DataBindingUtil.inflate<MainFragmentBinding>(inflater, R.layout.main_fragment, container, false)
 
-        val adapter = MenuAdapter(viewModel.onCheckedChangeListener)
+        val adapter = MenuAdapter(viewModel)
         binding.adapter = adapter
         subscribeUi(adapter)
 
