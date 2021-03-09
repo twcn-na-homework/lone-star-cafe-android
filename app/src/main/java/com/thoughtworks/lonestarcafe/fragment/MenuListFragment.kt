@@ -17,10 +17,6 @@ import com.thoughtworks.lonestarcafe.viewmodel.MainViewModelFactory
 
 class MenuListFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = MenuListFragment()
-    }
-
     private val mainViewModel: MainViewModel by activityViewModels {
         MainViewModelFactory(CustomizedApolloClient.client)
     }

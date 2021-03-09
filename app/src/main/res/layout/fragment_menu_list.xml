@@ -63,6 +63,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/submit_order"
                 android:textAllCaps="true"
+                android:enabled="@{viewModel.selectItems.size() != 0}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
