@@ -17,6 +17,9 @@ import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.newSingleThreadContext
+import kotlinx.coroutines.test.setMain
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -28,6 +31,8 @@ class MainViewModelTest {
     @get:Rule
     val rule = InstantTaskExecutorRule()
 
+    private val mainThreadSurrogate = newSingleThreadContext("UI thread")
+
     private lateinit var viewModel: MainViewModel
 
     @MockK
@@ -36,6 +41,8 @@ class MainViewModelTest {
     @Before
     fun setUp() {
         MockKAnnotations.init(this, relaxed = true)
+
+        Dispatchers.setMain(mainThreadSurrogate)
 
         val call = mockk<ApolloQueryCall<MenuListQuery.Data>>()
 

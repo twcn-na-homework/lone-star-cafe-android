@@ -13,7 +13,8 @@ buildscript {
         assertk_version = '0.23.1'
         mockwebserver_version = '4.9.0'
         arch_version = '2.1.0'
-        nav_version = "2.3.3"
+        nav_version = '2.3.3'
+        kotlinx_coroutines_test_version = '1.4.3'
     }
     repositories {
         google()

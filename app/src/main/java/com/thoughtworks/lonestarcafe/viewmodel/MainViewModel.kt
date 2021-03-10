@@ -5,12 +5,14 @@ import android.widget.CompoundButton
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import com.apollographql.apollo.ApolloCall
 import com.apollographql.apollo.ApolloClient
 import com.apollographql.apollo.api.Response
 import com.apollographql.apollo.exception.ApolloException
 import com.thoughtworks.lonestarcafe.MenuListQuery
 import com.thoughtworks.lonestarcafe.extension.notifyObservers
+import kotlinx.coroutines.launch
 
 class MainViewModel(private val apolloClient: ApolloClient) : ViewModel() {
     val menuList: MutableLiveData<List<MenuListQuery.Menu>> by lazy {
@@ -39,16 +41,18 @@ class MainViewModel(private val apolloClient: ApolloClient) : ViewModel() {
     }
 
     private fun loadMenuList() {
-        apolloClient.query(MenuListQuery()).enqueue(object: ApolloCall.Callback<MenuListQuery.Data>() {
-            override fun onResponse(response: Response<MenuListQuery.Data>) {
-                menuList.postValue(response.data?.menu)
-            }
+        viewModelScope.launch {
+            apolloClient.query(MenuListQuery()).enqueue(object: ApolloCall.Callback<MenuListQuery.Data>() {
+                override fun onResponse(response: Response<MenuListQuery.Data>) {
+                    menuList.postValue(response.data?.menu)
+                }
 
-            override fun onFailure(e: ApolloException) {
-                Log.e(MainViewModel::class.simpleName, e.toString())
-                TODO("Not yet implemented")
-            }
-        })
+                override fun onFailure(e: ApolloException) {
+                    Log.e(MainViewModel::class.simpleName, e.toString())
+                    TODO("Not yet implemented")
+                }
+            })
+        }
     }
 }
 

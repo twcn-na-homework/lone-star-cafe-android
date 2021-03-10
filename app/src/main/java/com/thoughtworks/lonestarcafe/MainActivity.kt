@@ -1,8 +1,7 @@
 package com.thoughtworks.lonestarcafe
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.thoughtworks.lonestarcafe.fragment.MenuListFragment
+import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
 
