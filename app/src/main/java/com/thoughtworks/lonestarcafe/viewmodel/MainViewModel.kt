@@ -2,6 +2,7 @@ package com.thoughtworks.lonestarcafe.viewmodel
 
 import android.util.Log
 import android.widget.CompoundButton
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -15,25 +16,31 @@ import com.thoughtworks.lonestarcafe.extension.notifyObservers
 import kotlinx.coroutines.launch
 
 class MainViewModel(private val apolloClient: ApolloClient) : ViewModel() {
-    val menuList: MutableLiveData<List<MenuListQuery.Menu>> by lazy {
+    private val _menuList: MutableLiveData<List<MenuListQuery.Menu>> by lazy {
         MutableLiveData()
     }
-    val selectItems: MutableLiveData<MutableMap<String, MenuListQuery.Menu>> by lazy {
+    val menuList: LiveData<List<MenuListQuery.Menu>>
+        get() = _menuList
+
+    private val _selectItems: MutableLiveData<MutableMap<String, MenuListQuery.Menu>> by lazy {
         MutableLiveData<MutableMap<String, MenuListQuery.Menu>>(HashMap())
     }
 
+    val selectItems: LiveData<MutableMap<String, MenuListQuery.Menu>>
+        get() = _selectItems
+
     val onCheckedChangeListener = CompoundButton.OnCheckedChangeListener { view: CompoundButton, isChecked: Boolean ->
         val menuItem = view.tag as MenuListQuery.Menu
-        selectItems.value?.size
+        _selectItems.value?.size
 
-        selectItems.value?.apply {
+        _selectItems.value?.apply {
             if (isChecked) {
                 put(menuItem.id, menuItem)
             } else {
                 remove(menuItem.id)
             }
         }
-        selectItems.notifyObservers()
+        _selectItems.notifyObservers()
     }
 
     init {
@@ -44,7 +51,7 @@ class MainViewModel(private val apolloClient: ApolloClient) : ViewModel() {
         viewModelScope.launch {
             apolloClient.query(MenuListQuery()).enqueue(object: ApolloCall.Callback<MenuListQuery.Data>() {
                 override fun onResponse(response: Response<MenuListQuery.Data>) {
-                    menuList.postValue(response.data?.menu)
+                    _menuList.postValue(response.data?.menu)
                 }
 
                 override fun onFailure(e: ApolloException) {
