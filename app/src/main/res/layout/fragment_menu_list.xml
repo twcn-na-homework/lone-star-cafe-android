@@ -20,6 +20,19 @@
         android:layout_height="match_parent"
         tools:context=".fragment.MenuListFragment">
 
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/appbar_layout"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:id="@+id/toolbar"
+                app:title="@string/app_name" />
+        </com.google.android.material.appbar.AppBarLayout>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/menu_list"
             android:layout_width="match_parent"
@@ -30,7 +43,7 @@
             app:layout_constraintBottom_toTopOf="@id/item_summary_bar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/appbar_layout"
             app:setAdapter="@{adapter}"
             tools:context="com.thoughtworks.lonestarcafe.MainActivity"
             tools:listitem="@layout/list_item_menu" />
