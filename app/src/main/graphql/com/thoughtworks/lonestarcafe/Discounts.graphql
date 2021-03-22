@@ -1,0 +1,9 @@
+query Discounts{
+    discount {
+        code
+        description
+        discountPct
+        discountAmount
+        applyOn
+    }
+}

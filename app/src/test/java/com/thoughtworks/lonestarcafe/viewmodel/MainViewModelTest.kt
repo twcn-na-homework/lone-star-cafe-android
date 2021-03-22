@@ -11,15 +11,24 @@ import com.apollographql.apollo.ApolloCall.Callback
 import com.apollographql.apollo.ApolloClient
 import com.apollographql.apollo.ApolloQueryCall
 import com.apollographql.apollo.api.Response
+import com.apollographql.apollo.coroutines.await
+import com.thoughtworks.lonestarcafe.DiscountsQuery
 import com.thoughtworks.lonestarcafe.MenuListQuery
 import com.thoughtworks.lonestarcafe.type.ItemType
 import io.mockk.MockKAnnotations
+import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
+import io.mockk.mockkStatic
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.newSingleThreadContext
+import kotlinx.coroutines.async
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.test.TestCoroutineDispatcher
+import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.runBlockingTest
 import kotlinx.coroutines.test.setMain
+import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -31,32 +40,56 @@ class MainViewModelTest {
     @get:Rule
     val rule = InstantTaskExecutorRule()
 
-    private val mainThreadSurrogate = newSingleThreadContext("UI thread")
+    private val testCoroutineDispatcher = TestCoroutineDispatcher()
 
     private lateinit var viewModel: MainViewModel
 
     @MockK
     private lateinit var mockApolloClient: ApolloClient
 
+    @MockK
+    private lateinit var menuListCall: ApolloQueryCall<MenuListQuery.Data>
+
+    @MockK
+    private lateinit var discountsCall: ApolloQueryCall<DiscountsQuery.Data>
+
+    @MockK
+    private lateinit var mockMenuListResponse: Response<MenuListQuery.Data>
+
+    @MockK
+    private lateinit var mockDiscountsResponse: Response<DiscountsQuery.Data>
+
     @Before
     fun setUp() {
         MockKAnnotations.init(this, relaxed = true)
 
-        Dispatchers.setMain(mainThreadSurrogate)
+        Dispatchers.setMain(testCoroutineDispatcher)
 
-        val call = mockk<ApolloQueryCall<MenuListQuery.Data>>()
+        every { mockApolloClient.query(any<MenuListQuery>()) } returns menuListCall
+        every { mockApolloClient.query(any<DiscountsQuery>()) } returns discountsCall
 
-        every { mockApolloClient.query(any<MenuListQuery>()) } returns call
+        every { mockMenuListResponse.data?.menu } returns listOf(menu)
+        every { mockDiscountsResponse.data?.discount } returns listOf(discount)
 
-        val mockResponse = mockk<Response<MenuListQuery.Data>>()
-
-        every { mockResponse.data?.menu } returns listOf(menu)
-
-        every { call.enqueue(any<Callback<MenuListQuery.Data>>()) } answers {
+        every { menuListCall.enqueue(any<Callback<MenuListQuery.Data>>()) } answers {
             val callback: Callback<MenuListQuery.Data> = firstArg()
-            callback.onResponse(mockResponse)
+            callback.onResponse(mockMenuListResponse)
         }
+
+        mockkStatic("com.apollographql.apollo.coroutines.CoroutinesExtensionsKt")
+
+        coEvery { discountsCall.await() } coAnswers {
+            delay(1)
+            mockDiscountsResponse
+        }
+
         viewModel = MainViewModel(mockApolloClient)
+    }
+
+    @After
+    fun tearDown() {
+        Dispatchers.resetMain()
+        testCoroutineDispatcher.cleanupTestCoroutines()
     }
 
     @Test
@@ -92,6 +125,21 @@ class MainViewModelTest {
         assertThat(viewModel.selectItems.value?.get("2")).isNotNull()
     }
 
+    @Test
+    fun shouldLoadDiscountsAndFillIntoTheLiveData() = runBlockingTest {
+        val deferred = async {
+            viewModel.loadDiscount()
+        }
+
+        assertThat(viewModel.isLoadingDiscount.value).isEqualTo(true)
+
+        deferred.await()
+
+        assertThat(viewModel.isLoadingDiscount.value).isEqualTo(false)
+        assertThat(viewModel.discounts.value?.get(0)).isEqualTo(discount)
+    }
+
+
     private val menu: MenuListQuery.Menu = MenuListQuery.Menu(
         id = "1",
         description = "test",
@@ -99,5 +147,13 @@ class MainViewModelTest {
         discountable = true,
         taxable = true,
         price = 499
+    )
+
+    private val discount: DiscountsQuery.Discount = DiscountsQuery.Discount(
+        code = "FAKE_DISC",
+        description = "This is a fake discount",
+        discountPct = null,
+        discountAmount = 500,
+        applyOn = listOf(ItemType.BEVERAGES, ItemType.DISHES)
     )
 }

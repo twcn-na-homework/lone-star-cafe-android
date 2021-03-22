@@ -10,7 +10,9 @@ import androidx.lifecycle.viewModelScope
 import com.apollographql.apollo.ApolloCall
 import com.apollographql.apollo.ApolloClient
 import com.apollographql.apollo.api.Response
+import com.apollographql.apollo.coroutines.await
 import com.apollographql.apollo.exception.ApolloException
+import com.thoughtworks.lonestarcafe.DiscountsQuery
 import com.thoughtworks.lonestarcafe.MenuListQuery
 import com.thoughtworks.lonestarcafe.extension.notifyObservers
 import kotlinx.coroutines.launch
@@ -19,15 +21,27 @@ class MainViewModel(private val apolloClient: ApolloClient) : ViewModel() {
     private val _menuList: MutableLiveData<List<MenuListQuery.Menu>> by lazy {
         MutableLiveData()
     }
-    val menuList: LiveData<List<MenuListQuery.Menu>>
-        get() = _menuList
-
     private val _selectItems: MutableLiveData<MutableMap<String, MenuListQuery.Menu>> by lazy {
         MutableLiveData<MutableMap<String, MenuListQuery.Menu>>(HashMap())
     }
+    private val _discounts: MutableLiveData<List<DiscountsQuery.Discount>?> by lazy {
+        MutableLiveData()
+    }
+    private val _isLoadingDiscount: MutableLiveData<Boolean> by lazy {
+        MutableLiveData(false)
+    }
+
+    val menuList: LiveData<List<MenuListQuery.Menu>>
+        get() = _menuList
 
     val selectItems: LiveData<MutableMap<String, MenuListQuery.Menu>>
         get() = _selectItems
+
+    val discounts: LiveData<List<DiscountsQuery.Discount>?>
+        get() = _discounts
+
+    val isLoadingDiscount: LiveData<Boolean>
+        get() = _isLoadingDiscount
 
     val onCheckedChangeListener = CompoundButton.OnCheckedChangeListener { view: CompoundButton, isChecked: Boolean ->
         val menuItem = view.tag as MenuListQuery.Menu
@@ -60,6 +74,15 @@ class MainViewModel(private val apolloClient: ApolloClient) : ViewModel() {
                 }
             })
         }
+    }
+
+    suspend fun loadDiscount() {
+        _isLoadingDiscount.value = true
+
+        val discountsData = apolloClient.query(DiscountsQuery()).await()
+
+        _isLoadingDiscount.value = false
+        _discounts.value = discountsData.data?.discount
     }
 }
 
