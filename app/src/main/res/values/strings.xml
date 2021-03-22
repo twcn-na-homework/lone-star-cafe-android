@@ -2,6 +2,9 @@
     <string name="app_name">Lone Star Cafe</string>
     <string name="price_format">$ %.2f</string>
     <string name="submit_order">submit</string>
+    <string name="apply_discount">Apply Discount</string>
+    <string name="receipt">Receipt</string>
+    <string name="discount_dialog_title">Choose Discount</string>
 
     <plurals name="number_selected_items">
         <item quantity="one">%d item</item>
