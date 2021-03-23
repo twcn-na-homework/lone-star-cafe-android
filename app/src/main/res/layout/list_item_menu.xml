@@ -11,7 +11,7 @@
 
         <variable
             name="viewModel"
-            type="com.thoughtworks.lonestarcafe.viewmodel.MainViewModel" />
+            type="com.thoughtworks.lonestarcafe.viewmodels.MainViewModel" />
     </data>
 
     <androidx.cardview.widget.CardView

@@ -1,4 +1,4 @@
-package com.thoughtworks.lonestarcafe.adapter
+package com.thoughtworks.lonestarcafe.adapters
 
 import android.content.Context
 import android.view.LayoutInflater

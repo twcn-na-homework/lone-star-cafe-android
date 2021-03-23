@@ -5,7 +5,7 @@
 
     <data>
 
-        <import type="com.thoughtworks.lonestarcafe.extension.ListKt"/>
+        <import type="com.thoughtworks.lonestarcafe.extensions.ListKt"/>
         <variable
             name="discount"
             type="com.thoughtworks.lonestarcafe.DiscountsQuery.Discount" />

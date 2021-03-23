@@ -1,4 +1,4 @@
-package com.thoughtworks.lonestarcafe.fragment
+package com.thoughtworks.lonestarcafe.fragments
 
 import android.content.Context
 import android.os.Bundle
@@ -12,11 +12,11 @@ import androidx.lifecycle.lifecycleScope
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.thoughtworks.lonestarcafe.DiscountsQuery
 import com.thoughtworks.lonestarcafe.R
-import com.thoughtworks.lonestarcafe.adapter.DiscountItemAdapter
+import com.thoughtworks.lonestarcafe.adapters.DiscountItemAdapter
 import com.thoughtworks.lonestarcafe.databinding.FragmentReceiptBinding
 import com.thoughtworks.lonestarcafe.network.apollo.CustomizedApolloClient
-import com.thoughtworks.lonestarcafe.viewmodel.MainViewModel
-import com.thoughtworks.lonestarcafe.viewmodel.MainViewModelFactory
+import com.thoughtworks.lonestarcafe.viewmodels.MainViewModel
+import com.thoughtworks.lonestarcafe.viewmodels.MainViewModelFactory
 
 class ReceiptFragment : Fragment() {
     private val mainViewModel: MainViewModel by activityViewModels {

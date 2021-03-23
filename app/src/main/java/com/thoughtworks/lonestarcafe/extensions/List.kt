@@ -1,4 +1,4 @@
-package com.thoughtworks.lonestarcafe.extension
+package com.thoughtworks.lonestarcafe.extensions
 
 import com.thoughtworks.lonestarcafe.type.ItemType
 

@@ -1,4 +1,4 @@
-package com.thoughtworks.lonestarcafe.fragment
+package com.thoughtworks.lonestarcafe.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,11 +9,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import com.thoughtworks.lonestarcafe.R
-import com.thoughtworks.lonestarcafe.adapter.MenuAdapter
+import com.thoughtworks.lonestarcafe.adapters.MenuAdapter
 import com.thoughtworks.lonestarcafe.databinding.FragmentMenuListBinding
 import com.thoughtworks.lonestarcafe.network.apollo.CustomizedApolloClient
-import com.thoughtworks.lonestarcafe.viewmodel.MainViewModel
-import com.thoughtworks.lonestarcafe.viewmodel.MainViewModelFactory
+import com.thoughtworks.lonestarcafe.viewmodels.MainViewModel
+import com.thoughtworks.lonestarcafe.viewmodels.MainViewModelFactory
 
 class MenuListFragment : Fragment() {
 

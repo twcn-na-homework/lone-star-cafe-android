@@ -1,4 +1,4 @@
-package com.thoughtworks.lonestarcafe.adapter
+package com.thoughtworks.lonestarcafe.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.thoughtworks.lonestarcafe.MenuListQuery
 import com.thoughtworks.lonestarcafe.databinding.ListItemMenuBinding
-import com.thoughtworks.lonestarcafe.viewmodel.MainViewModel
+import com.thoughtworks.lonestarcafe.viewmodels.MainViewModel
 
 class MenuAdapter(private val mainViewModel: MainViewModel) :
     ListAdapter<MenuListQuery.Menu, MenuAdapter.MenuViewHolder>(MenuDiffCallback()) {

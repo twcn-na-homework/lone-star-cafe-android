@@ -7,18 +7,18 @@
 
         <variable
             name="adapter"
-            type="com.thoughtworks.lonestarcafe.adapter.MenuAdapter" />
+            type="com.thoughtworks.lonestarcafe.adapters.MenuAdapter" />
 
         <variable
             name="viewModel"
-            type="com.thoughtworks.lonestarcafe.viewmodel.MainViewModel" />
+            type="com.thoughtworks.lonestarcafe.viewmodels.MainViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".fragment.MenuListFragment">
+        tools:context=".fragments.MenuListFragment">
 
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"

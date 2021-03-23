@@ -1,4 +1,4 @@
-package com.thoughtworks.lonestarcafe.viewmodel
+package com.thoughtworks.lonestarcafe.viewmodels
 
 import android.widget.CheckBox
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule

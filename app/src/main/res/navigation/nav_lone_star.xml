@@ -5,7 +5,7 @@
     app:startDestination="@id/menu_list_fragment">
     <fragment
         android:id="@+id/menu_list_fragment"
-        android:name="com.thoughtworks.lonestarcafe.fragment.MenuListFragment"
+        android:name="com.thoughtworks.lonestarcafe.fragments.MenuListFragment"
         tools:layout="@layout/fragment_menu_list">
         <action
             android:id="@+id/action_menu_list_fragment_to_receipt_fragment"
@@ -13,7 +13,7 @@
     </fragment>
     <fragment
         android:id="@+id/receipt_fragment"
-        android:name="com.thoughtworks.lonestarcafe.fragment.ReceiptFragment"
+        android:name="com.thoughtworks.lonestarcafe.fragments.ReceiptFragment"
         android:label="fragment_receipt"
         tools:layout="@layout/fragment_receipt" />
 
