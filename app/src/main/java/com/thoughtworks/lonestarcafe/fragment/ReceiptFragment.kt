@@ -10,7 +10,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.thoughtworks.lonestarcafe.DiscountsQuery
 import com.thoughtworks.lonestarcafe.R
+import com.thoughtworks.lonestarcafe.adapter.DiscountItemAdapter
 import com.thoughtworks.lonestarcafe.databinding.FragmentReceiptBinding
 import com.thoughtworks.lonestarcafe.network.apollo.CustomizedApolloClient
 import com.thoughtworks.lonestarcafe.viewmodel.MainViewModel
@@ -48,11 +50,7 @@ class ReceiptFragment : Fragment() {
                     setOnMenuItemClickListener {
                         when (it.itemId) {
                             R.id.discount -> {
-                                showDiscountSelectDialog(
-                                    context,
-                                    discounts.map { disc -> disc.description }.toTypedArray(),
-                                    0
-                                )
+                                showDiscountSelectDialog(context, discounts)
                                 true
                             }
                             else -> false
@@ -67,12 +65,12 @@ class ReceiptFragment : Fragment() {
 
     private fun showDiscountSelectDialog(
         context: Context,
-        discounts: Array<String>,
-        selectedDiscount: Int
+        discounts: List<DiscountsQuery.Discount>
     ) {
+        val adapter = DiscountItemAdapter(context, discounts)
         MaterialAlertDialogBuilder(context).apply {
             setTitle(R.string.discount_dialog_title)
-            setSingleChoiceItems(discounts, selectedDiscount) { view, id ->
+            setSingleChoiceItems(adapter, -1) { view, id ->
                 println(id)
                 view.dismiss()
             }

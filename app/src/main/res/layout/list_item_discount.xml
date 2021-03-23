@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="com.thoughtworks.lonestarcafe.extension.ListKt"/>
+        <variable
+            name="discount"
+            type="com.thoughtworks.lonestarcafe.DiscountsQuery.Discount" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/list_item_padding">
+
+
+        <TextView
+            android:id="@+id/discount_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{discount.description}"
+            android:textColor="@color/primary_text"
+            android:textSize="@dimen/size_subtitle1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Discount Description" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{ListKt.toDisplayString(discount.applyOn)}"
+            android:textSize="@dimen/size_subtitle2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/discount_desc"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:text="Beverages, Fruits" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
