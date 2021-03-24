@@ -10,8 +10,11 @@
             type="com.thoughtworks.lonestarcafe.adapters.MenuAdapter" />
 
         <variable
-            name="viewModel"
+            name="mainVm"
             type="com.thoughtworks.lonestarcafe.viewmodels.MainViewModel" />
+        <variable
+            name="menuListVm"
+            type="com.thoughtworks.lonestarcafe.viewmodels.MenuListViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -62,7 +65,7 @@
                 android:id="@+id/select_item_count"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@{@plurals/number_selected_items(viewModel.selectItems.size, viewModel.selectItems.size)}"
+                android:text="@{@plurals/number_selected_items(menuListVm.selectedMenuItems.size(), menuListVm.selectedMenuItems.size())}"
                 android:textColor="@color/white"
                 android:textSize="@dimen/size_header6"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -76,7 +79,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/submit_order"
                 android:textAllCaps="true"
-                android:enabled="@{viewModel.selectItems.size() != 0}"
+                android:enabled="@{menuListVm.selectedMenuItems.size() > 0}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

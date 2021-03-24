@@ -21,9 +21,6 @@ class MainViewModel(private val apolloClient: ApolloClient) : ViewModel() {
     private val _menuList: MutableLiveData<List<MenuListQuery.Menu>> by lazy {
         MutableLiveData()
     }
-    private val _selectItems: MutableLiveData<MutableMap<String, MenuListQuery.Menu>> by lazy {
-        MutableLiveData<MutableMap<String, MenuListQuery.Menu>>(HashMap())
-    }
     private val _discounts: MutableLiveData<List<DiscountsQuery.Discount>?> by lazy {
         MutableLiveData()
     }
@@ -34,28 +31,11 @@ class MainViewModel(private val apolloClient: ApolloClient) : ViewModel() {
     val menuList: LiveData<List<MenuListQuery.Menu>>
         get() = _menuList
 
-    val selectItems: LiveData<MutableMap<String, MenuListQuery.Menu>>
-        get() = _selectItems
-
     val discounts: LiveData<List<DiscountsQuery.Discount>?>
         get() = _discounts
 
     val isLoadingDiscount: LiveData<Boolean>
         get() = _isLoadingDiscount
-
-    val onCheckedChangeListener = CompoundButton.OnCheckedChangeListener { view: CompoundButton, isChecked: Boolean ->
-        val menuItem = view.tag as MenuListQuery.Menu
-        _selectItems.value?.size
-
-        _selectItems.value?.apply {
-            if (isChecked) {
-                put(menuItem.id, menuItem)
-            } else {
-                remove(menuItem.id)
-            }
-        }
-        _selectItems.notifyObservers()
-    }
 
     init {
         loadMenuList()

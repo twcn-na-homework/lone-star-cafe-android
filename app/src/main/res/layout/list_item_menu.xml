@@ -10,8 +10,8 @@
             type="com.thoughtworks.lonestarcafe.MenuListQuery.Menu" />
 
         <variable
-            name="viewModel"
-            type="com.thoughtworks.lonestarcafe.viewmodels.MainViewModel" />
+            name="menuListVm"
+            type="com.thoughtworks.lonestarcafe.viewmodels.MenuListViewModel" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -32,9 +32,9 @@
                 android:id="@+id/checkbox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:tag="@{menuItem}"
-                android:checked="@{viewModel.selectItems.get(menuItem.id) != null}"
-                android:onCheckedChanged="@{viewModel.onCheckedChangeListener}"
+                android:tag="@{menuItem.id}"
+                android:checked="@{menuListVm.selectedMenuItems.contains(menuItem.id)}"
+                android:onCheckedChanged="@{menuListVm.onCheckedChangeListener}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/description"
                 app:layout_constraintStart_toStartOf="parent"

@@ -7,9 +7,9 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.thoughtworks.lonestarcafe.MenuListQuery
 import com.thoughtworks.lonestarcafe.databinding.ListItemMenuBinding
-import com.thoughtworks.lonestarcafe.viewmodels.MainViewModel
+import com.thoughtworks.lonestarcafe.viewmodels.MenuListViewModel
 
-class MenuAdapter(private val mainViewModel: MainViewModel) :
+class MenuAdapter(private val menuListViewModel: MenuListViewModel) :
     ListAdapter<MenuListQuery.Menu, MenuAdapter.MenuViewHolder>(MenuDiffCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MenuViewHolder {
         return MenuViewHolder(
@@ -31,7 +31,7 @@ class MenuAdapter(private val mainViewModel: MainViewModel) :
         fun bind(item: MenuListQuery.Menu) {
             binding.apply {
                 menuItem = item
-                viewModel = mainViewModel
+                menuListVm = menuListViewModel
                 executePendingBindings()
             }
         }
