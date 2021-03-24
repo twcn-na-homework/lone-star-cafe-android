@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.thoughtworks.lonestarcafe.DiscountsQuery
@@ -17,11 +18,14 @@ import com.thoughtworks.lonestarcafe.databinding.FragmentReceiptBinding
 import com.thoughtworks.lonestarcafe.network.apollo.CustomizedApolloClient
 import com.thoughtworks.lonestarcafe.viewmodels.MainViewModel
 import com.thoughtworks.lonestarcafe.viewmodels.MainViewModelFactory
+import com.thoughtworks.lonestarcafe.viewmodels.ReceiptViewModel
 
 class ReceiptFragment : Fragment() {
     private val mainViewModel: MainViewModel by activityViewModels {
         MainViewModelFactory(CustomizedApolloClient.client)
     }
+
+    private val receiptViewModel: ReceiptViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,6 +43,8 @@ class ReceiptFragment : Fragment() {
     ): View {
         val binding = DataBindingUtil.inflate<FragmentReceiptBinding>(inflater, R.layout.fragment_receipt, container, false)
 
+        binding.receiptVm = receiptViewModel
+        binding.lifecycleOwner = viewLifecycleOwner
         binding.toolbar.setNavigationOnClickListener {
             requireActivity().onBackPressed()
         }
@@ -71,7 +77,9 @@ class ReceiptFragment : Fragment() {
         MaterialAlertDialogBuilder(context).apply {
             setTitle(R.string.discount_dialog_title)
             setSingleChoiceItems(adapter, -1) { view, id ->
-                println(id)
+                mainViewModel.discounts.value?.get(id).let {
+                    receiptViewModel.selectedDiscount.value = it
+                }
                 view.dismiss()
             }
         }.create().show()
