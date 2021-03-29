@@ -1,7 +1,6 @@
 package com.thoughtworks.lonestarcafe.viewmodels
 
 import android.util.Log
-import android.widget.CompoundButton
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -14,7 +13,6 @@ import com.apollographql.apollo.coroutines.await
 import com.apollographql.apollo.exception.ApolloException
 import com.thoughtworks.lonestarcafe.DiscountsQuery
 import com.thoughtworks.lonestarcafe.MenuListQuery
-import com.thoughtworks.lonestarcafe.extensions.notifyObservers
 import kotlinx.coroutines.launch
 
 class MainViewModel(private val apolloClient: ApolloClient) : ViewModel() {

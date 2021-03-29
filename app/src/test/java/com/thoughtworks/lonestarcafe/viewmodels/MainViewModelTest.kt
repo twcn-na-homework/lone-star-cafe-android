@@ -101,31 +101,6 @@ class MainViewModelTest {
     }
 
     @Test
-    fun shouldAddMenuItemIdToSelectedItemsWhenCheckBoxIsChecked() {
-        val mockedCheckBox = mockk<CheckBox>()
-        every { mockedCheckBox.tag } returns menu
-
-        viewModel.onCheckedChangeListener.onCheckedChanged(mockedCheckBox, true)
-
-        viewModel.selectItems.observeForever {
-            assertThat(it["1"]).isEqualTo(menu)
-        }
-    }
-
-    @Test
-    fun shouldRemoveMenuItemFromSelectedItemsWhenCheckBoxUnchecked() {
-        val mockedCheckBox = mockk<CheckBox>()
-        every { mockedCheckBox.tag } returns menu
-        viewModel.selectItems.value?.put("1", menu)
-        viewModel.selectItems.value?.put("2", menu)
-
-        viewModel.onCheckedChangeListener.onCheckedChanged(mockedCheckBox, false)
-
-        assertThat(viewModel.selectItems.value?.get("1")).isNull()
-        assertThat(viewModel.selectItems.value?.get("2")).isNotNull()
-    }
-
-    @Test
     fun shouldLoadDiscountsAndFillIntoTheLiveData() = runBlockingTest {
         val deferred = async {
             viewModel.loadDiscount()
