@@ -35,23 +35,10 @@ class MainViewModel(private val apolloClient: ApolloClient) : ViewModel() {
     val isLoadingDiscount: LiveData<Boolean>
         get() = _isLoadingDiscount
 
-    init {
-        loadMenuList()
-    }
+    suspend fun loadMenuList() {
+        val menuList = apolloClient.query(MenuListQuery()).await()
 
-    private fun loadMenuList() {
-        viewModelScope.launch {
-            apolloClient.query(MenuListQuery()).enqueue(object: ApolloCall.Callback<MenuListQuery.Data>() {
-                override fun onResponse(response: Response<MenuListQuery.Data>) {
-                    _menuList.postValue(response.data?.menu)
-                }
-
-                override fun onFailure(e: ApolloException) {
-                    Log.e(MainViewModel::class.simpleName, e.toString())
-                    TODO("Not yet implemented")
-                }
-            })
-        }
+        _menuList.postValue(menuList.data?.menu)
     }
 
     suspend fun loadDiscount() {
@@ -60,7 +47,7 @@ class MainViewModel(private val apolloClient: ApolloClient) : ViewModel() {
         val discountsData = apolloClient.query(DiscountsQuery()).await()
 
         _isLoadingDiscount.value = false
-        _discounts.value = discountsData.data?.discount
+        _discounts.postValue(discountsData.data?.discount)
     }
 }
 

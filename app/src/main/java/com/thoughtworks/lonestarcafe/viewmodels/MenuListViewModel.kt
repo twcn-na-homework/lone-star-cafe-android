@@ -12,6 +12,9 @@ class MenuListViewModel : ViewModel() {
     }
     val selectedMenuItems: LiveData<MutableList<String>>
         get() = _selectedMenuItems
+    val isLoadingMenuItems: MutableLiveData<Boolean> by lazy {
+        MutableLiveData(false)
+    }
 
     val onCheckedChangeListener = CompoundButton.OnCheckedChangeListener { view: CompoundButton, isChecked: Boolean ->
         val menuItemId = view.tag as String

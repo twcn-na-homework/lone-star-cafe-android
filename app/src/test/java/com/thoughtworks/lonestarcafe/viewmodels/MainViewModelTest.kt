@@ -1,13 +1,8 @@
 package com.thoughtworks.lonestarcafe.viewmodels
 
-import android.widget.CheckBox
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import assertk.assertThat
-import assertk.assertions.hasSize
 import assertk.assertions.isEqualTo
-import assertk.assertions.isNotNull
-import assertk.assertions.isNull
-import com.apollographql.apollo.ApolloCall.Callback
 import com.apollographql.apollo.ApolloClient
 import com.apollographql.apollo.ApolloQueryCall
 import com.apollographql.apollo.api.Response
@@ -19,7 +14,6 @@ import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
-import io.mockk.mockk
 import io.mockk.mockkStatic
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -65,19 +59,18 @@ class MainViewModelTest {
 
         Dispatchers.setMain(testCoroutineDispatcher)
 
-        every { mockApolloClient.query(any<MenuListQuery>()) } returns menuListCall
-        every { mockApolloClient.query(any<DiscountsQuery>()) } returns discountsCall
+        every { mockApolloClient.query(ofType(MenuListQuery::class)) } returns menuListCall
+        every { mockApolloClient.query(ofType(DiscountsQuery::class)) } returns discountsCall
 
         every { mockMenuListResponse.data?.menu } returns listOf(menu)
         every { mockDiscountsResponse.data?.discount } returns listOf(discount)
 
-        every { menuListCall.enqueue(any<Callback<MenuListQuery.Data>>()) } answers {
-            val callback: Callback<MenuListQuery.Data> = firstArg()
-            callback.onResponse(mockMenuListResponse)
-        }
-
         mockkStatic("com.apollographql.apollo.coroutines.CoroutinesExtensionsKt")
 
+        coEvery { menuListCall.await() } coAnswers {
+            delay(1)
+            mockMenuListResponse
+        }
         coEvery { discountsCall.await() } coAnswers {
             delay(1)
             mockDiscountsResponse
@@ -93,15 +86,18 @@ class MainViewModelTest {
     }
 
     @Test
-    fun shouldObserveTheLiveDataChangeWhenInitTheViewModel() {
-        viewModel.menuList.observeForever {
-            assertThat(it).hasSize(1)
-            assertThat(it[0]).isEqualTo(menu)
+    fun `should load menu items and fill into the LiveData`() = runBlockingTest {
+        val deferred = async {
+            viewModel.loadMenuList()
         }
+
+        deferred.await()
+
+        assertThat(viewModel.menuList.value?.get(0)).isEqualTo(menu)
     }
 
     @Test
-    fun shouldLoadDiscountsAndFillIntoTheLiveData() = runBlockingTest {
+    fun `should load discounts and fill into the LiveData`() = runBlockingTest {
         val deferred = async {
             viewModel.loadDiscount()
         }

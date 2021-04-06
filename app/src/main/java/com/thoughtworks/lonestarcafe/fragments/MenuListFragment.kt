@@ -8,6 +8,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import com.thoughtworks.lonestarcafe.R
 import com.thoughtworks.lonestarcafe.adapters.MenuAdapter
@@ -24,6 +25,18 @@ class MenuListFragment : Fragment() {
     }
 
     private val menuListViewModel: MenuListViewModel by viewModels()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        if (mainViewModel.menuList.value == null) {
+            lifecycleScope.launchWhenCreated {
+                menuListViewModel.isLoadingMenuItems.value = true
+                mainViewModel.loadMenuList()
+                menuListViewModel.isLoadingMenuItems.value = false
+            }
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
