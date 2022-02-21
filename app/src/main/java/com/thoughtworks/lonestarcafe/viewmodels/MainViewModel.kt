@@ -1,19 +1,15 @@
 package com.thoughtworks.lonestarcafe.viewmodels
 
-import android.util.Log
+import android.widget.CompoundButton
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewModelScope
-import com.apollographql.apollo.ApolloCall
 import com.apollographql.apollo.ApolloClient
-import com.apollographql.apollo.api.Response
 import com.apollographql.apollo.coroutines.await
-import com.apollographql.apollo.exception.ApolloException
 import com.thoughtworks.lonestarcafe.DiscountsQuery
 import com.thoughtworks.lonestarcafe.MenuListQuery
-import kotlinx.coroutines.launch
+import com.thoughtworks.lonestarcafe.extensions.notifyObservers
 
 class MainViewModel(private val apolloClient: ApolloClient) : ViewModel() {
     private val _menuList: MutableLiveData<List<MenuListQuery.Menu>> by lazy {
@@ -26,6 +22,10 @@ class MainViewModel(private val apolloClient: ApolloClient) : ViewModel() {
         MutableLiveData(false)
     }
 
+    private val _selectedMenuItems: MutableLiveData<MutableList<String>> by lazy {
+        MutableLiveData(mutableListOf())
+    }
+
     val menuList: LiveData<List<MenuListQuery.Menu>>
         get() = _menuList
 
@@ -34,6 +34,22 @@ class MainViewModel(private val apolloClient: ApolloClient) : ViewModel() {
 
     val isLoadingDiscount: LiveData<Boolean>
         get() = _isLoadingDiscount
+
+    val selectedMenuItems: LiveData<MutableList<String>>
+        get() = _selectedMenuItems
+
+    val onCheckedChangeListener = CompoundButton.OnCheckedChangeListener { view: CompoundButton, isChecked: Boolean ->
+        val menuItemId = view.tag as String
+
+        _selectedMenuItems.value?.apply {
+            if (isChecked) {
+                add(menuItemId)
+            } else {
+                remove(menuItemId)
+            }
+        }
+        _selectedMenuItems.notifyObservers()
+    }
 
     suspend fun loadMenuList() {
         val menuList = apolloClient.query(MenuListQuery()).await()

@@ -42,7 +42,7 @@ class MenuListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val menuAdapter = MenuAdapter(menuListViewModel)
+        val menuAdapter = MenuAdapter(mainViewModel)
         val binding = DataBindingUtil.inflate<FragmentMenuListBinding>(inflater, R.layout.fragment_menu_list, container, false)
 
         return binding.apply {

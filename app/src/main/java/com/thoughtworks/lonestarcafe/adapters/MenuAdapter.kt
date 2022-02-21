@@ -7,9 +7,9 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.thoughtworks.lonestarcafe.MenuListQuery
 import com.thoughtworks.lonestarcafe.databinding.ListItemMenuBinding
-import com.thoughtworks.lonestarcafe.viewmodels.MenuListViewModel
+import com.thoughtworks.lonestarcafe.viewmodels.MainViewModel
 
-class MenuAdapter(private val menuListViewModel: MenuListViewModel) :
+class MenuAdapter(private val mainViewModel: MainViewModel) :
     ListAdapter<MenuListQuery.Menu, MenuAdapter.MenuViewHolder>(MenuDiffCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MenuViewHolder {
         return MenuViewHolder(
@@ -31,14 +31,14 @@ class MenuAdapter(private val menuListViewModel: MenuListViewModel) :
         fun bind(item: MenuListQuery.Menu) {
             binding.apply {
                 menuItem = item
-                menuListVm = menuListViewModel
+                mainVm = mainViewModel
                 executePendingBindings()
             }
         }
     }
 }
 
-private class MenuDiffCallback: DiffUtil.ItemCallback<MenuListQuery.Menu>() {
+private class MenuDiffCallback : DiffUtil.ItemCallback<MenuListQuery.Menu>() {
     override fun areItemsTheSame(
         oldItem: MenuListQuery.Menu,
         newItem: MenuListQuery.Menu

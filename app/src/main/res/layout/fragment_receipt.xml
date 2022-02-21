@@ -30,7 +30,7 @@
         </com.google.android.material.appbar.AppBarLayout>
 
         <TextView
-            android:id="@+id/message"
+            android:id="@+id/selected_discount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@{receiptVm.selectedDiscount.description}"

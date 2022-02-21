@@ -1,5 +1,6 @@
 package com.thoughtworks.lonestarcafe.viewmodels
 
+import android.widget.CheckBox
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import assertk.assertThat
 import assertk.assertions.isEqualTo
@@ -10,11 +11,8 @@ import com.apollographql.apollo.coroutines.await
 import com.thoughtworks.lonestarcafe.DiscountsQuery
 import com.thoughtworks.lonestarcafe.MenuListQuery
 import com.thoughtworks.lonestarcafe.type.ItemType
-import io.mockk.MockKAnnotations
-import io.mockk.coEvery
-import io.mockk.every
+import io.mockk.*
 import io.mockk.impl.annotations.MockK
-import io.mockk.mockkStatic
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
@@ -110,6 +108,30 @@ class MainViewModelTest {
         assertThat(viewModel.discounts.value?.get(0)).isEqualTo(discount)
     }
 
+    @Test
+    fun `should add menuItemId to selected items when CheckBox is checked`() {
+        val mockedCheckBox = mockk<CheckBox>()
+        every { mockedCheckBox.tag } returns "1001"
+
+        viewModel.onCheckedChangeListener.onCheckedChanged(mockedCheckBox, true)
+
+        viewModel.selectedMenuItems.observeForever {
+            assertThat(it[0]).isEqualTo("1001")
+        }
+    }
+
+    @Test
+    fun `should remove MenuItem from selectedItems when CheckBox unchecked`() {
+        val mockedCheckBox = mockk<CheckBox>()
+        every { mockedCheckBox.tag } returns "1001"
+        viewModel.selectedMenuItems.value?.add("1001")
+        viewModel.selectedMenuItems.value?.add("1002")
+
+        viewModel.onCheckedChangeListener.onCheckedChanged(mockedCheckBox, false)
+
+        assertThat(viewModel.selectedMenuItems.value?.size).isEqualTo(1)
+        assertThat(viewModel.selectedMenuItems.value?.get(0)).isEqualTo("1002")
+    }
 
     private val menu: MenuListQuery.Menu = MenuListQuery.Menu(
         id = "1",
