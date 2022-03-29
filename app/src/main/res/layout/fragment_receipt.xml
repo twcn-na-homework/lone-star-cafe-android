@@ -30,12 +30,20 @@
         </com.google.android.material.appbar.AppBarLayout>
 
         <TextView
+            android:id="@+id/select_items"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{receiptVm.selectedItemsStr}"
+            app:layout_constraintTop_toBottomOf="@id/appbar_layout"
+            tools:text="2001 Coke\n2002 Sprite"/>
+
+        <TextView
             android:id="@+id/selected_discount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@{receiptVm.selectedDiscount.description}"
             android:visibility="@{receiptVm.selectedDiscount == null ? View.GONE : View.VISIBLE}"
-            app:layout_constraintTop_toBottomOf="@id/appbar_layout"
+            app:layout_constraintTop_toBottomOf="@id/select_items"
             tools:text="Selected Discount"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

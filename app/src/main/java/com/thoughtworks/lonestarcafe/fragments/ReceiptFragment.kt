@@ -69,6 +69,16 @@ class ReceiptFragment : Fragment() {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        mainViewModel.selectedMenuItems.observe(viewLifecycleOwner) { selectedItems ->
+            receiptViewModel.selectedItemsStr.value = selectedItems.map(
+                receiptViewModel.getMenuItemDetailString(mainViewModel.menuList.value)
+            ).filter { it.isNotEmpty() }.joinToString("\n")
+        }
+    }
+
     private fun showDiscountSelectDialog(
         context: Context,
         discounts: List<DiscountsQuery.Discount>
