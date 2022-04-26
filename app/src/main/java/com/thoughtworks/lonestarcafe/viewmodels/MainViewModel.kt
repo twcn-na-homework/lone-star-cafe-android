@@ -68,5 +68,5 @@ class MainViewModel(private val apolloClient: ApolloClient) : ViewModel() {
 }
 
 class MainViewModelFactory(private val apolloClient: ApolloClient): ViewModelProvider.NewInstanceFactory() {
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T = MainViewModel(apolloClient) as T
+    override fun <T : ViewModel> create(modelClass: Class<T>): T = MainViewModel(apolloClient) as T
 }

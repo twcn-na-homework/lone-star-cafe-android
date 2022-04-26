@@ -8,8 +8,11 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val appCompositionRoot = (application as LoneStarCafeApplication).appCompositionRoot
+
         setContent {
-            LoneStarCafeApp()
+            LoneStarCafeApp(appCompositionRoot)
         }
     }
 }
