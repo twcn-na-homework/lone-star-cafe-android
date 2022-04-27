@@ -7,7 +7,7 @@ val Color.Companion.PurplePrimary: Color
 val Color.Companion.PurpleLight: Color
     get() = Color(0xff757de8)
 val Color.Companion.PurpleDark: Color
-    get() = Color(0xff002984)
+    get() = Color(0xff303f9f)
 val Color.Companion.RedPrimary: Color
     get() = Color(0xffff5252)
 val Color.Companion.RedLight: Color
