@@ -8,7 +8,7 @@ import androidx.compose.ui.graphics.Color
 private val lightThemeColors = lightColors(
     primary = Color.PurplePrimary,
     primaryVariant = Color.PurpleDark,
-    background = Color.PurpleLight,
+    background = Color.PurpleLightPrimary,
     surface = Color.White,
     onPrimary = Color.White,
     secondary = Color.RedPrimary,

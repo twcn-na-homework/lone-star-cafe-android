@@ -1,8 +1,11 @@
 package com.thoughtworks.lonestarcafe
 
+import androidx.compose.material.Scaffold
+import androidx.compose.material.Text
+import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.compose.ui.res.stringResource
 import com.thoughtworks.lonestarcafe.data.AppCompositionRoot
 import com.thoughtworks.lonestarcafe.theme.LoneStarCafeTheme
 import com.thoughtworks.lonestarcafe.ui.MenuScreen
@@ -14,6 +17,15 @@ fun LoneStarCafeApp(compositionRoot: AppCompositionRoot) {
         val viewModel = remember {
             MenuScreenViewModel(compositionRoot.menuRepository)
         }
-        MenuScreen(viewModel)
+        Scaffold(
+            topBar = {
+                TopAppBar(
+                    title = { Text(text = stringResource(id = R.string.app_name)) }
+                )
+            },
+        ) {
+
+            MenuScreen(viewModel)
+        }
     }
 }

@@ -4,8 +4,8 @@ import androidx.compose.ui.graphics.Color
 
 val Color.Companion.PurplePrimary: Color
     get() = Color(0xff3f51b5)
-val Color.Companion.PurpleLight: Color
-    get() = Color(0xff757de8)
+val Color.Companion.PurpleLightPrimary: Color
+    get() = Color(0xffc5cae9)
 val Color.Companion.PurpleDark: Color
     get() = Color(0xff303f9f)
 val Color.Companion.RedPrimary: Color
