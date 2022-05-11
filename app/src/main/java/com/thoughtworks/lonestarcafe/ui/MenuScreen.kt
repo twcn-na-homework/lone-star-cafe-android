@@ -2,7 +2,6 @@ package com.thoughtworks.lonestarcafe.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Scaffold
@@ -27,10 +26,9 @@ fun MenuScreen(
         },
     ) {
         LazyColumn(
-            modifier = Modifier
-                .padding(start = 12.dp, end = 12.dp),
+            modifier = Modifier,
             verticalArrangement = Arrangement.spacedBy(12.dp),
-            contentPadding = PaddingValues(top = 12.dp)
+            contentPadding = PaddingValues(12.dp)
         ) {
             items(menuScreenViewModel.uiState.menuItems) {
                 MenuItem(menuItemUiState = it)
